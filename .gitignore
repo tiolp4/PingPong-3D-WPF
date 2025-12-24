@@ -1,0 +1,19 @@
+# Visual Studio temporary files
+.vs/
+
+# NuGet packages folder
+packages/
+
+# Build output
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user

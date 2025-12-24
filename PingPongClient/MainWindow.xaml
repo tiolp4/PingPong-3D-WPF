@@ -1,0 +1,104 @@
+﻿<Window x:Class="PingPongClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PingPong Client"
+        Height="720"
+        Width="1100"
+        KeyDown="Window_KeyDown"
+        KeyUp="Window_KeyUp"
+        Loaded="Window_Loaded"
+        Background="#121212">
+
+    <Window.Resources>
+        <!-- Динамический фон -->
+        <Storyboard x:Key="BackgroundPulse" RepeatBehavior="Forever" AutoReverse="True">
+            <ColorAnimation Storyboard.TargetName="Bg1"
+                            Storyboard.TargetProperty="Color"
+                            From="#050510"
+                            To="#101040"
+                            Duration="0:0:6"/>
+            <ColorAnimation Storyboard.TargetName="Bg2"
+                            Storyboard.TargetProperty="Color"
+                            From="#0A0A20"
+                            To="#202060"
+                            Duration="0:0:6"/>
+        </Storyboard>
+    </Window.Resources>
+
+    <Grid>
+        <!-- Динамический фон -->
+        <Grid.Background>
+            <RadialGradientBrush RadiusX="1.2" RadiusY="1.2" Center="0.5,0.5">
+                <GradientStop x:Name="Bg1" Color="#050510" Offset="0"/>
+                <GradientStop x:Name="Bg2" Color="#0A0A20" Offset="1"/>
+            </RadialGradientBrush>
+        </Grid.Background>
+
+        <!-- 3D сцена -->
+        <Viewport3D Name="MainViewport" ClipToBounds="True"/>
+
+        <!-- Неоновый счёт -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+            <TextBlock Name="ScoreText"
+                       Text="0 : 0"
+                       FontSize="36"
+                       FontWeight="Bold"
+                       FontFamily="Consolas"
+                       Foreground="#00FFFF"
+                       Padding="12">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="#00FFFF"
+                                      BlurRadius="25"
+                                      ShadowDepth="0"
+                                      Opacity="1"/>
+                </TextBlock.Effect>
+            </TextBlock>
+        </StackPanel>
+        
+        <!-- Pause / Quit Buttons -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10" >
+            <Button Name="PauseButton" Content="Pause" Click="PauseButton_Click" Margin="4,0" FontWeight="Bold"
+                    FontSize="16" Padding="10,4" Foreground="Cyan" Background="Black" BorderBrush="Cyan">
+                <Button.Effect>
+                    <DropShadowEffect Color="Cyan" BlurRadius="20" ShadowDepth="0" Opacity="0.9"/>
+                </Button.Effect>
+            </Button>
+            <Button Name="QuitButton" Content="Quit" Click="QuitButton_Click" Margin="4,0" FontWeight="Bold"
+                    FontSize="16" Padding="10,4" Foreground="Magenta" Background="Black" BorderBrush="Magenta">
+                <Button.Effect>
+                    <DropShadowEffect Color="Magenta" BlurRadius="20" ShadowDepth="0" Opacity="0.9"/>
+                </Button.Effect>
+            </Button>
+        </StackPanel>
+        
+        <!-- Панель подключения -->
+        <StackPanel x:Name="ConnectPanel" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
+            <TextBlock Text="Server IP:" VerticalAlignment="Center" Margin="0,0,6,0" Foreground="White"/>
+            <TextBox Name="IpBox" Text="127.0.0.1" Width="110" Background="#0A0A1A" Foreground="#00FFFF" BorderBrush="#00FFFF" CaretBrush="#00FFFF"/>
+            <TextBlock Text="Port:" VerticalAlignment="Center" Margin="8,0,6,0" Foreground="White"/>
+            <TextBox Name="PortBox" Text="5000" Width="70" Background="#0A0A1A" Foreground="#00FFFF" BorderBrush="#00FFFF" CaretBrush="#00FFFF"/>
+            <Button Content="CONNECT"
+                    Click="Connect_Click"
+                    Margin="8,0,0,0"
+                    FontWeight="Bold"
+                    Padding="10,4"
+                    Background="#111122"
+                    Foreground="#00FFFF"
+                    BorderBrush="#00FFFF"
+                    BorderThickness="1">
+                <Button.Effect>
+                    <DropShadowEffect Color="#00FFFF" BlurRadius="12" ShadowDepth="0"/>
+                </Button.Effect>
+            </Button>
+        </StackPanel>
+        <!-- Paused Overlay -->
+        <TextBlock Name="PausedText" Text="PAUSED" FontSize="60" FontWeight="Bold"
+                   Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Visibility="Collapsed" Opacity="0.7"/>
+        <!-- Вспышка при голе -->
+        <Rectangle x:Name="GoalFlash"
+                   Fill="#80FFFFFF"
+                   Opacity="0"
+                   IsHitTestVisible="False"/>
+    </Grid>
+</Window>
